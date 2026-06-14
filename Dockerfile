@@ -13,10 +13,10 @@ FROM node:22-alpine AS runner
 WORKDIR /app
 ENV NODE_ENV=production
 ENV HOST=0.0.0.0
-ENV PORT=3000
+ENV PORT=5173
 COPY package.json package-lock.json ./
 RUN npm install --force --omit=dev
 COPY --from=builder /app/dist ./dist
 COPY --from=builder /app/public ./public
-EXPOSE 3000
+EXPOSE 5173
 CMD ["npm", "run", "start"]
