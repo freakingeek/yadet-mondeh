@@ -14,7 +14,8 @@ const handler = createHandler(() => (
           <meta name="theme-color" content="#020617" />
           <meta name="apple-mobile-web-app-capable" content="yes" />
           <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-          <link rel="icon" href="/favicon.ico" />
+          <link rel="icon" href="/images/mental-health.png" type="image/png" />
+          <link rel="apple-touch-icon" href="/images/mental-health.png" />
           {assets}
         </head>
         <body>
