@@ -1,7 +1,7 @@
 // @refresh reload
 import { createHandler, StartServer } from "@solidjs/start/server";
 
-export default createHandler(() => (
+const handler = createHandler(() => (
   <StartServer
     document={({ assets, children, scripts }) => (
       <html lang="fa" dir="rtl">
@@ -25,3 +25,22 @@ export default createHandler(() => (
     )}
   />
 ));
+
+export default {
+  fetch(req: any, context: any) {
+    const host = req.headers["x-forwarded-host"] || req.headers.host || "localhost";
+    const proto = req.headers["x-forwarded-proto"] || (req.socket?.encrypted ? "https" : "http");
+    const url = `${proto}://${host}${req.url || "/"}`;
+    const hasBody = req.method && !["GET", "HEAD"].includes(req.method);
+
+    return handler.fetch(
+      new Request(url, {
+        method: req.method,
+        headers: req.headers as HeadersInit,
+        body: hasBody ? req : undefined,
+        duplex: hasBody ? "half" : undefined
+      } as RequestInit & { duplex?: "half" }),
+      context
+    );
+  }
+};
