@@ -13,7 +13,7 @@
     "@solidjs/vite-plugin-nitro-2": "^0.1.0",
     "lucide-solid": "^1.18.0",
     "solid-js": "^1.9.5",
-    "vite": "^8.0.13"
+    "vite": "^7.1.12"
   },
   "devDependencies": {
     "@tailwindcss/vite": "^4.0.7",

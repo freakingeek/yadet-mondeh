@@ -1,5 +1,6 @@
 import { A, useNavigate } from "@solidjs/router";
 import { createEffect, createSignal, onCleanup, Show } from "solid-js";
+import PageMeta from "@/components/PageMeta";
 import GameButton from "@/components/game/GameButton";
 import GameCard from "@/components/game/GameCard";
 import ResultScreen from "@/components/game/ResultScreen";
@@ -63,9 +64,16 @@ export default function Play() {
   const actionLabel = () => (game.isLastTurn() ? "دیدن نتیجه نهایی" : "نوبت بعدی");
 
   return (
-    <Show
-      when={game.session}
-      fallback={
+    <>
+      <PageMeta
+        title="در حال بازی"
+        description="نوبت بازیکن، سؤال فعلی و شمارش معکوس بازی یادت مونده؟ را در این صفحه دنبال کن."
+        path="/play"
+        noindex
+      />
+      <Show
+        when={game.session}
+        fallback={
         <main dir="rtl" lang="fa" class="fixed inset-0 z-10 h-svh overflow-hidden px-4 pt-24 pb-8 text-white">
           <section class="mx-auto flex h-full max-w-md flex-col justify-center text-center">
             <GameCard>
@@ -195,6 +203,7 @@ export default function Play() {
           </Show>
         </>
       )}
-    </Show>
+      </Show>
+    </>
   );
 }

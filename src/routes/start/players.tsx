@@ -1,4 +1,5 @@
 import { useNavigate } from "@solidjs/router";
+import PageMeta from "@/components/PageMeta";
 import GameButton from "@/components/game/GameButton";
 import PlayerForm from "@/components/game/PlayerForm";
 import { useGame } from "@/game/state";
@@ -23,7 +24,13 @@ export default function StartPlayers() {
   };
 
   return (
-    <main dir="rtl" lang="fa" class="h-full overflow-hidden px-4 py-4 text-white">
+    <>
+      <PageMeta
+        title="بازیکن‌ها"
+        description="بازیکن‌های یادت مونده؟ را وارد کن و جمع را برای شروع بازی آماده کن."
+        path="/start/players"
+      />
+      <main dir="rtl" lang="fa" class="h-full overflow-hidden px-4 py-4 text-white">
       <section class="mx-auto flex h-full max-w-md min-h-0 flex-col gap-4">
         <div class="shrink-0 text-right">
           <p class="text-xs font-bold text-violet-200">مرحله ۱ از ۲</p>
@@ -52,6 +59,7 @@ export default function StartPlayers() {
           </GameButton>
         </div>
       </section>
-    </main>
+      </main>
+    </>
   );
 }

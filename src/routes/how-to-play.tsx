@@ -1,4 +1,5 @@
 import { A } from "@solidjs/router";
+import PageMeta from "@/components/PageMeta";
 import GameButton from "@/components/game/GameButton";
 import GameCard from "@/components/game/GameCard";
 
@@ -14,7 +15,13 @@ const rules = [
 
 export default function HowToPlay() {
   return (
-    <main dir="rtl" lang="fa" class="h-full overflow-hidden px-4 py-8 text-white">
+    <>
+      <PageMeta
+        title="راهنمای بازی"
+        description="قوانین یادت مونده؟ را بخوان تا با زمان، تعویض سؤال، امتیازها و روند بازی کاملاً آشنا شوی."
+        path="/how-to-play"
+      />
+      <main dir="rtl" lang="fa" class="h-full overflow-hidden px-4 py-8 text-white">
       <section class="mx-auto flex h-full max-w-md flex-col gap-5">
         <div>
           <p class="text-sm font-bold text-violet-200">راهنما</p>
@@ -38,6 +45,7 @@ export default function HowToPlay() {
           <GameButton full>فهمیدم، بریم بازی</GameButton>
         </A>
       </section>
-    </main>
+      </main>
+    </>
   );
 }

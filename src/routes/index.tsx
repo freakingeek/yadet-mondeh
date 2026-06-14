@@ -1,9 +1,16 @@
 import { A } from "@solidjs/router";
+import PageMeta from "@/components/PageMeta";
 import GameButton from "@/components/game/GameButton";
 
 export default function Home() {
   return (
-    <main dir="rtl" lang="fa" class="h-full overflow-hidden px-4 py-8 text-white">
+    <>
+      <PageMeta
+        title="بازی حافظه و آبرو"
+        description="یادت مونده؟ یک بازی گروهی سریع و بامزه برای سؤال‌های سخت، امتیاز گرفتن و نباختن جلوی جمع است."
+        path="/"
+      />
+      <main dir="rtl" lang="fa" class="h-full overflow-hidden px-4 py-8 text-white">
       <section class="mx-auto flex h-full max-w-md flex-col justify-between gap-8">
         <div class="pt-8 text-center">
           <img
@@ -41,6 +48,7 @@ export default function Home() {
           <p class="mt-12 text-xs font-medium tracking-wide text-slate-500"> ما رو یادت مونده؟ {new Date().getFullYear()} ©</p>
         </div>
       </section>
-    </main>
+      </main>
+    </>
   );
 }

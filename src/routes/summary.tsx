@@ -1,5 +1,6 @@
 import { A, useNavigate } from "@solidjs/router";
 import { For, Show } from "solid-js";
+import PageMeta from "@/components/PageMeta";
 import GameButton from "@/components/game/GameButton";
 import GameCard from "@/components/game/GameCard";
 import Scoreboard from "@/components/game/Scoreboard";
@@ -21,9 +22,16 @@ export default function Summary() {
   };
 
   return (
-    <Show
-      when={game.session}
-      fallback={
+    <>
+      <PageMeta
+        title="نتیجه بازی"
+        description="نتیجه نهایی بازی، برنده‌ها و جدول امتیازها را در یادت مونده؟ ببین."
+        path="/summary"
+        noindex
+      />
+      <Show
+        when={game.session}
+        fallback={
         <main dir="rtl" lang="fa" class="h-full overflow-hidden px-4 py-8 text-white">
           <section class="mx-auto flex h-full max-w-md flex-col justify-center text-center">
             <GameCard>
@@ -71,6 +79,7 @@ export default function Summary() {
           </section>
         </main>
       )}
-    </Show>
+      </Show>
+    </>
   );
 }

@@ -1,10 +1,17 @@
 import { A } from "@solidjs/router";
+import PageMeta from "@/components/PageMeta";
 import GameButton from "@/components/game/GameButton";
 import GameCard from "@/components/game/GameCard";
 
 export default function Settings() {
   return (
-    <main dir="rtl" lang="fa" class="h-full overflow-hidden px-4 py-8 text-white">
+    <>
+      <PageMeta
+        title="قوانین بازی"
+        description="با زمان سؤال، تعداد دورها و قوانین تعویض سؤال در یادت مونده؟ آشنا شو و بازی را مطابق جمع خودت تنظیم کن."
+        path="/settings"
+      />
+      <main dir="rtl" lang="fa" class="h-full overflow-hidden px-4 py-8 text-white">
       <section class="mx-auto flex h-full max-w-md flex-col gap-5">
         <div>
           <p class="text-sm font-bold text-violet-200">تنظیمات</p>
@@ -35,6 +42,7 @@ export default function Settings() {
           <GameButton full>انتخاب تنظیمات و شروع</GameButton>
         </A>
       </section>
-    </main>
+      </main>
+    </>
   );
 }

@@ -1,5 +1,6 @@
 import { useNavigate } from "@solidjs/router";
 import { For, Show } from "solid-js";
+import PageMeta from "@/components/PageMeta";
 import GameButton from "@/components/game/GameButton";
 import SettingsForm from "@/components/game/SettingsForm";
 import { normalizePlayer } from "@/game/players";
@@ -23,8 +24,14 @@ export default function StartSettings() {
   };
 
   return (
-    <main dir="rtl" lang="fa" class="h-full overflow-hidden px-4 py-4 text-white">
-      <section class="mx-auto flex h-full max-w-md flex-col gap-4">
+    <>
+      <PageMeta
+        title="تنظیم بازی"
+        description="زمان، تعداد دورها و قوانین تعویض سؤال را برای شروع بازی یادت مونده؟ مشخص کن."
+        path="/start/settings"
+      />
+      <main dir="rtl" lang="fa" class="h-full overflow-hidden px-4 py-4 text-white">
+        <section class="mx-auto flex h-full max-w-md flex-col gap-4">
         <div class="text-right">
           <p class="text-xs font-bold text-violet-200">مرحله ۲ از ۲</p>
           <p class="mt-2 text-sm leading-7 text-slate-300">حالا زمان، دور و تعویض سؤال رو مشخص کن و بازی رو شروع کن.</p>
@@ -45,7 +52,8 @@ export default function StartSettings() {
             شروع بازی
           </GameButton>
         </div>
-      </section>
-    </main>
+        </section>
+      </main>
+    </>
   );
 }
