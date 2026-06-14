@@ -1,6 +1,6 @@
 import type { ChangeQuestionMode, GameSettings, RoundCount, TimerDuration } from "./types";
 
-export const TIMER_OPTIONS: TimerDuration[] = [10, 15, 30, 45];
+export const TIMER_OPTIONS: TimerDuration[] = [10, 15, 30, 45, "unlimited"];
 export const ROUND_OPTIONS: RoundCount[] = [3, 5, 10];
 export const CHANGE_QUESTION_OPTIONS: ChangeQuestionMode[] = [1, 2, "unlimited"];
 

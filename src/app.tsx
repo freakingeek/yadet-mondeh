@@ -10,13 +10,15 @@ export default function App() {
     <GameProvider>
       <Router
         root={props => (
-          <>
+          <div class="flex h-full min-h-0 flex-col overflow-hidden">
             <Nav />
-            <Suspense>{props.children}</Suspense>
-          </>
+            <div class="flex-1 min-h-0 overflow-hidden">
+              <Suspense>{props.children}</Suspense>
+            </div>
+          </div>
         )}
       >
-        <FileRoutes />
+        {FileRoutes()}
       </Router>
     </GameProvider>
   );

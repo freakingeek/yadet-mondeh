@@ -23,6 +23,11 @@ export default function Play() {
       return;
     }
 
+    if (session.settings.timerSeconds === "unlimited") {
+      setRemaining(0);
+      return;
+    }
+
     setRemaining(session.settings.timerSeconds);
     const interval = setInterval(() => {
       setRemaining(current => {
@@ -61,8 +66,8 @@ export default function Play() {
     <Show
       when={game.session}
       fallback={
-        <main dir="rtl" lang="fa" class="min-h-[calc(100vh-4rem)] px-4 py-8 text-white">
-          <section class="mx-auto flex min-h-[70vh] max-w-md flex-col justify-center text-center">
+        <main dir="rtl" lang="fa" class="fixed inset-0 z-10 h-svh overflow-hidden px-4 pt-24 pb-8 text-white">
+          <section class="mx-auto flex h-full max-w-md flex-col justify-center text-center">
             <GameCard>
               <p class="text-5xl">🫠</p>
               <h1 class="mt-5 text-3xl font-black">بازی فعالی پیدا نشد</h1>
@@ -78,11 +83,11 @@ export default function Play() {
       {session => (
         <>
           <Show when={session().phase === "turn-intro"}>
-            <main dir="rtl" lang="fa" class="min-h-screen px-4 py-8 text-white">
-              <section class="mx-auto flex min-h-[85vh] max-w-md flex-col justify-center gap-5">
+            <main dir="rtl" lang="fa" class="fixed inset-0 z-10 h-svh overflow-hidden px-4 pt-24 pb-8 text-white">
+              <section class="mx-auto flex h-full max-w-md flex-col justify-center gap-5">
                 <GameCard class="text-center">
                   <p class="text-sm font-bold text-violet-200">
-                    راند {session().roundIndex + 1} از {session().settings.rounds}
+                    دور {session().roundIndex + 1} از {session().settings.rounds}
                   </p>
                   <h1 class="mt-4 text-5xl font-black leading-tight">نوبت {game.currentPlayer()?.name}</h1>
                   <p class="mt-4 leading-8 text-slate-300">گوشی رو بده بهش. وقتی آماده بود، شروع رو بزنه و بدون گریه جواب بده.</p>
@@ -102,17 +107,17 @@ export default function Play() {
               <main
                 dir="rtl"
                 lang="fa"
-                class={`min-h-screen px-4 py-6 text-white transition ${remaining() <= 3 ? "bg-rose-950" : ""}`}
+                class={`fixed inset-0 z-10 h-svh overflow-hidden px-4 pt-20 pb-6 text-white transition ${remaining() <= 3 ? "bg-rose-950" : ""}`}
                 onClick={() => {
                   if (remaining() <= 3) submitSuccess();
                 }}
               >
-                <section class="mx-auto flex min-h-[90vh] max-w-md flex-col justify-between gap-5">
+                <section class="mx-auto flex h-full max-w-md flex-col justify-between gap-5">
                   <div class="space-y-5">
                     <div class="flex items-center justify-between gap-3 text-sm font-bold text-slate-300">
                       <span>نوبت {game.currentPlayer()?.name}</span>
                       <span>
-                        راند {session().roundIndex + 1}/{session().settings.rounds}
+                        دور {session().roundIndex + 1}/{session().settings.rounds}
                       </span>
                     </div>
 

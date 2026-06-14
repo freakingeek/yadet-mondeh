@@ -24,8 +24,8 @@ export default function Summary() {
     <Show
       when={game.session}
       fallback={
-        <main dir="rtl" lang="fa" class="min-h-[calc(100vh-4rem)] px-4 py-8 text-white">
-          <section class="mx-auto flex min-h-[70vh] max-w-md flex-col justify-center text-center">
+        <main dir="rtl" lang="fa" class="h-full overflow-hidden px-4 py-8 text-white">
+          <section class="mx-auto flex h-full max-w-md flex-col justify-center text-center">
             <GameCard>
               <p class="text-5xl">🤷‍♂️</p>
               <h1 class="mt-5 text-3xl font-black">هنوز نتیجه‌ای نداریم</h1>
@@ -39,8 +39,8 @@ export default function Summary() {
       }
     >
       {session => (
-        <main dir="rtl" lang="fa" class="min-h-[calc(100vh-4rem)] px-4 py-8 text-white">
-          <section class="mx-auto max-w-md space-y-5">
+        <main dir="rtl" lang="fa" class="h-full overflow-hidden px-4 py-8 text-white">
+          <section class="mx-auto flex h-full max-w-md flex-col gap-5">
             <GameCard class="text-center">
               <p class="text-6xl">👑</p>
               <p class="mt-4 text-sm font-bold text-violet-200">نتیجه نهایی</p>
@@ -60,7 +60,7 @@ export default function Summary() {
               <Scoreboard session={session()} />
             </GameCard>
 
-            <div class="grid gap-3">
+            <div class="mt-auto grid gap-3">
               <GameButton type="button" full onClick={playAgain}>
                 دوباره با همین تنظیمات
               </GameButton>

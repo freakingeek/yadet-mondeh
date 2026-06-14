@@ -17,6 +17,7 @@ type GameContextValue = {
   currentPlayer: () => Player | undefined;
   isLastTurn: () => boolean;
   setSetupPlayers: (players: Player[]) => void;
+  updateSetupPlayerName: (id: string, name: string) => void;
   setSetupSettings: (settings: GameSettings) => void;
   resetSetupDraft: () => void;
   startGame: (players: Player[], settings: GameSettings) => void;
@@ -28,7 +29,6 @@ type GameContextValue = {
   restartSameSettings: () => void;
   resetGame: () => void;
 };
-
 const GameContext = createContext<GameContextValue>();
 
 function makeInitialScores(players: Player[]) {
@@ -129,6 +129,11 @@ export function GameProvider(props: ParentProps) {
     isLastTurn,
     setSetupPlayers(players) {
       setState("setupDraft", "players", players);
+    },
+    updateSetupPlayerName(id, name) {
+      const playerIndex = state.setupDraft.players.findIndex(player => player.id === id);
+      if (playerIndex === -1) return;
+      setState("setupDraft", "players", playerIndex, "name", name);
     },
     setSetupSettings(settings) {
       setState("setupDraft", "settings", settings);

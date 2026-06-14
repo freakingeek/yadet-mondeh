@@ -3,8 +3,8 @@ import GameButton from "@/components/game/GameButton";
 
 export default function Home() {
   return (
-    <main dir="rtl" lang="fa" class="min-h-screen px-4 py-8 text-white">
-      <section class="mx-auto flex min-h-[calc(100vh-4rem)] max-w-md flex-col justify-between gap-8">
+    <main dir="rtl" lang="fa" class="h-full overflow-hidden px-4 py-8 text-white">
+      <section class="mx-auto flex h-full max-w-md flex-col justify-between gap-8">
         <div class="pt-8 text-center">
           <img
             src="/images/mental-health.png"

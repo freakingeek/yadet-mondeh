@@ -28,7 +28,7 @@ export default function Nav() {
 
   return (
     <Show when={location.pathname !== "/"}>
-      <header dir="rtl" lang="fa" class="sticky top-0 z-20 border-b border-white/10 bg-slate-950/90 backdrop-blur">
+      <header dir="rtl" lang="fa" class="z-20 shrink-0 border-b border-white/10 bg-slate-950/90 backdrop-blur">
         <div class="mx-auto flex max-w-md items-center gap-3 px-4 py-3">
           <button
             type="button"

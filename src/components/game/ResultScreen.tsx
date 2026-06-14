@@ -17,17 +17,17 @@ export default function ResultScreen(props: ResultScreenProps) {
     <main
       dir="rtl"
       lang="fa"
-      class={`min-h-[calc(100vh-4rem)] px-4 py-8 text-white ${
+      class={`fixed inset-0 z-30 h-svh overflow-hidden px-4 py-8 text-white ${
         success()
           ? "bg-gradient-to-br from-emerald-500 via-emerald-700 to-slate-950"
           : "bg-gradient-to-br from-rose-500 via-red-800 to-slate-950"
-      }`}
+      } result-screen-shell`}
     >
-      <section class="mx-auto flex min-h-[70vh] max-w-md flex-col items-center justify-center text-center">
-        <div class="mb-6 text-7xl">{success() ? "🏆" : "💀"}</div>
-        <h1 class="text-5xl font-black leading-tight">{props.title}</h1>
-        <p class="mt-5 text-xl font-bold leading-9 text-white/90">{props.message}</p>
-        <div class="my-8 rounded-[2rem] bg-white/15 px-8 py-5 ring-1 ring-white/20">
+      <section class="result-screen-panel mx-auto flex h-full max-w-md flex-col items-center justify-center text-center">
+        <div class="result-screen-icon mb-6 text-7xl">{success() ? "🏆" : "💀"}</div>
+        <h1 class="result-screen-title text-5xl font-black leading-tight">{props.title}</h1>
+        <p class="result-screen-copy mt-5 text-xl font-bold leading-9 text-white/90">{props.message}</p>
+        <div class="result-screen-points my-8 rounded-[2rem] bg-white/15 px-8 py-5 ring-1 ring-white/20">
           <span class="block text-sm text-white/70">امتیاز این نوبت</span>
           <strong class="text-4xl font-black">{props.points}</strong>
         </div>

@@ -1,4 +1,4 @@
-export type TimerDuration = 10 | 15 | 30 | 45;
+export type TimerDuration = 10 | 15 | 30 | 45 | "unlimited";
 export type RoundCount = 3 | 5 | 10;
 export type ChangeQuestionMode = 1 | 2 | "unlimited";
 

@@ -1,6 +1,6 @@
+import { Plus, Trash2 } from "lucide-solid";
 import { For, Show } from "solid-js";
 import type { Player } from "@/game/types";
-import GameButton from "./GameButton";
 
 type PlayerFormProps = {
   players: Player[];
@@ -12,17 +12,7 @@ type PlayerFormProps = {
 export default function PlayerForm(props: PlayerFormProps) {
   return (
     <div class="space-y-3">
-      <div class="flex items-center justify-between gap-3">
-        <div>
-          <h2 class="text-lg font-black text-white">بازیکن‌ها</h2>
-          <p class="mt-1 text-xs text-slate-300">حداقل ۲ نفر. فقط اسم‌ها رو وارد کن.</p>
-        </div>
-        <GameButton type="button" variant="ghost" class="px-3 py-2 text-sm" onClick={props.onAdd}>
-          + نفر
-        </GameButton>
-      </div>
-
-      <div class="grid grid-cols-2 gap-2">
+      <div class="space-y-2">
         <For each={props.players}>
           {(player, index) => (
             <div class="rounded-2xl border border-white/10 bg-slate-950/45 p-3">
@@ -31,10 +21,11 @@ export default function PlayerForm(props: PlayerFormProps) {
                 <Show when={props.players.length > 2}>
                   <button
                     type="button"
-                    class="rounded-full bg-rose-500/15 px-2 py-1 text-[10px] font-bold text-rose-100 ring-1 ring-rose-300/20"
+                    aria-label="حذف بازیکن"
+                    class="grid h-8 w-8 place-items-center rounded-full bg-rose-500/15 text-rose-100 ring-1 ring-rose-300/20 transition hover:bg-rose-500/25"
                     onClick={() => props.onRemove(player.id)}
                   >
-                    حذف
+                    <Trash2 size={14} />
                   </button>
                 </Show>
               </div>
@@ -48,6 +39,15 @@ export default function PlayerForm(props: PlayerFormProps) {
             </div>
           )}
         </For>
+
+        <button
+          type="button"
+          class="flex w-full items-center justify-center gap-2 rounded-2xl border border-dashed border-white/15 bg-white/5 px-4 py-4 text-sm font-black text-slate-100 transition hover:bg-white/10 active:scale-[0.98]"
+          onClick={props.onAdd}
+        >
+          <Plus size={18} />
+          <span>بازیکن جدید</span>
+        </button>
       </div>
     </div>
   );
