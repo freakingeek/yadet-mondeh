@@ -38,7 +38,7 @@ export default function Settings() {
           </div>
         </GameCard>
 
-        <A href="/start" class="mt-auto block">
+        <A href="/start/players" class="mt-auto block">
           <GameButton full>انتخاب تنظیمات و شروع</GameButton>
         </A>
       </section>

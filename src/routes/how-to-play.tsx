@@ -41,7 +41,7 @@ export default function HowToPlay() {
           </ol>
         </GameCard>
 
-        <A href="/start" class="mt-auto block">
+        <A href="/start/players" class="mt-auto block">
           <GameButton full>فهمیدم، بریم بازی</GameButton>
         </A>
       </section>

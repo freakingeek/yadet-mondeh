@@ -26,7 +26,7 @@ export default function Home() {
         </div>
 
         <div class="pb-2 text-center">
-          <A href="/start" class="block">
+          <A href="/start/players" class="block">
             <GameButton class="home-start-button py-7 text-2xl" full>
               شروع بازی
             </GameButton>

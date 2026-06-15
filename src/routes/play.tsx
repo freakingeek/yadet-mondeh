@@ -80,7 +80,7 @@ export default function Play() {
               <p class="text-5xl">🫠</p>
               <h1 class="mt-5 text-3xl font-black">بازی فعالی پیدا نشد</h1>
               <p class="mt-3 leading-8 text-slate-300">اول بازیکن‌ها رو وارد کن تا بتونیم آبروریزی رو شروع کنیم.</p>
-              <A href="/start" class="mt-6 block">
+              <A href="/start/players" class="mt-6 block">
                 <GameButton full>ساخت بازی جدید</GameButton>
               </A>
             </GameCard>

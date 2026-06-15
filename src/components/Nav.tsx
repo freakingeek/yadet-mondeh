@@ -2,7 +2,6 @@ import { useLocation, useNavigate } from "@solidjs/router";
 import { Show } from "solid-js";
 
 const pageTitles: Record<string, string> = {
-  "/start": "شروع بازی",
   "/start/players": "بازیکن‌ها",
   "/start/settings": "تنظیمات بازی",
   "/how-to-play": "راهنما",

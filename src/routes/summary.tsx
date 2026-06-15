@@ -38,7 +38,7 @@ export default function Summary() {
               <p class="text-5xl">🤷‍♂️</p>
               <h1 class="mt-5 text-3xl font-black">هنوز نتیجه‌ای نداریم</h1>
               <p class="mt-3 leading-8 text-slate-300">اول یه بازی کامل کن، بعد بیا اینجا پُز بده.</p>
-              <A href="/start" class="mt-6 block">
+              <A href="/start/players" class="mt-6 block">
                 <GameButton full>شروع بازی</GameButton>
               </A>
             </GameCard>
