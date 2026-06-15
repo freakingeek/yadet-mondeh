@@ -6,14 +6,17 @@ import GameCard from "@/components/game/GameCard";
 import ResultScreen from "@/components/game/ResultScreen";
 import Scoreboard from "@/components/game/Scoreboard";
 import TimerCircle from "@/components/game/TimerCircle";
+import { useMusic } from "@/providers/music";
+import { getPlaybackRate } from "@/audio/playback-rate";
 import { FAIL_MESSAGES, SUCCESS_MESSAGES } from "@/game/constants";
 import { pickMessage } from "@/game/messages";
 import { canChangeQuestion } from "@/game/scoring";
-import { useGame } from "@/game/state";
+import { useGame } from "@/providers/game";
 
 export default function Play() {
   const navigate = useNavigate();
   const game = useGame();
+  const music = useMusic();
   const [remaining, setRemaining] = createSignal(0);
   const [progress, setProgress] = createSignal(100);
 
@@ -29,12 +32,14 @@ export default function Play() {
     const questionId = session?.currentQuestion?.id;
 
     if (!session || session.phase !== "question" || !questionId) {
+      music.resetPlaybackRate();
       return;
     }
 
     if (session.settings.timerSeconds === "unlimited") {
       setRemaining(0);
       setProgress(100);
+      music.resetPlaybackRate();
       return;
     }
 
@@ -62,6 +67,22 @@ export default function Play() {
     frame = requestAnimationFrame(tick);
 
     onCleanup(() => cancelAnimationFrame(frame));
+  });
+
+  createEffect(() => {
+    const session = game.session;
+
+    if (!session || session.phase !== "question") {
+      music.resetPlaybackRate();
+      return;
+    }
+
+    music.setPlaybackRate(
+      getPlaybackRate({
+        remainingSeconds: remaining(),
+        totalSeconds: session.settings.timerSeconds,
+      }),
+    );
   });
 
   const isUrgent = () => remaining() <= 3 && remaining() > 0;

@@ -5,7 +5,7 @@ import GameButton from "@/components/game/GameButton";
 import GameCard from "@/components/game/GameCard";
 import Scoreboard from "@/components/game/Scoreboard";
 import { getWinners } from "@/game/ranking";
-import { useGame } from "@/game/state";
+import { useGame } from "@/providers/game";
 
 export default function Summary() {
   const game = useGame();

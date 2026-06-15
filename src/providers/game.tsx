@@ -1,12 +1,12 @@
 import { createContext, useContext, type ParentProps } from "solid-js";
 import { createStore } from "solid-js/store";
-import { DEFAULT_SETTINGS } from "./constants";
-import { clearStoredPlayerNames, saveStoredPlayerNames } from "./player-names-storage";
-import { createQuestion } from "./questions";
-import { getPointsAfterQuestionChange, canChangeQuestion } from "./scoring";
-import { createDefaultSettings, createDefaultSetupDraft } from "./settings";
-import { createEmptyPlayer } from "./players";
-import type { GameSession, GameSettings, Player, SetupDraft, TurnResult } from "./types";
+import { DEFAULT_SETTINGS } from "@/game/constants";
+import { clearStoredPlayerNames, saveStoredPlayerNames } from "@/game/player-names-storage";
+import { createEmptyPlayer } from "@/game/players";
+import { createQuestion } from "@/game/questions";
+import { canChangeQuestion, getPointsAfterQuestionChange } from "@/game/scoring";
+import { createDefaultSettings, createDefaultSetupDraft } from "@/game/settings";
+import type { GameSession, GameSettings, Player, SetupDraft, TurnResult } from "@/game/types";
 
 function persistSetupPlayerNames(players: Player[]) {
   saveStoredPlayerNames(players.map(player => player.name));
@@ -35,6 +35,7 @@ type GameContextValue = {
   restartSameSettings: () => void;
   resetGame: () => void;
 };
+
 const GameContext = createContext<GameContextValue>();
 
 function makeInitialScores(players: Player[]) {

@@ -2,7 +2,7 @@ import { useNavigate } from "@solidjs/router";
 import PageMeta from "@/components/PageMeta";
 import GameButton from "@/components/game/GameButton";
 import PlayerForm from "@/components/game/PlayerForm";
-import { useGame } from "@/game/state";
+import { useGame } from "@/providers/game";
 import { createEmptyPlayer } from "@/game/players";
 
 export default function StartPlayers() {

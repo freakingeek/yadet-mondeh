@@ -4,12 +4,14 @@ import PageMeta from "@/components/PageMeta";
 import GameButton from "@/components/game/GameButton";
 import SettingsForm from "@/components/game/SettingsForm";
 import { normalizePlayer } from "@/game/players";
-import { useGame } from "@/game/state";
+import { useMusic } from "@/providers/music";
+import { useGame } from "@/providers/game";
 import { validatePlayers } from "@/game/validation";
 
 export default function StartSettings() {
   const navigate = useNavigate();
   const game = useGame();
+  const music = useMusic();
   const errors = () => validatePlayers(game.setupDraft.players.map(normalizePlayer));
 
   const startGame = () => {
@@ -20,6 +22,7 @@ export default function StartSettings() {
     }
 
     game.startGame(normalizedPlayers, game.setupDraft.settings);
+    music.restartForGameStart();
     navigate("/play");
   };
 
