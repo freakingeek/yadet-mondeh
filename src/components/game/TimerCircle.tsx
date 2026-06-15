@@ -3,30 +3,44 @@ import type { TimerDuration } from "@/game/types";
 type TimerCircleProps = {
   remaining: number;
   total: TimerDuration;
+  progress: number;
+  urgent?: boolean;
 };
 
 export default function TimerCircle(props: TimerCircleProps) {
   const isUnlimited = () => props.total === "unlimited";
-  const urgent = () => !isUnlimited() && props.remaining <= 3;
-  const progress = () => {
-    if (isUnlimited()) return 100;
-    return Math.max(0, Math.min(100, (props.remaining / props.total) * 100));
+  const ringProgress = () => {
+    if (isUnlimited()) {
+      return 100;
+    }
+
+    return Math.max(0, Math.min(100, props.progress));
   };
+
+  const ringColor = () => (props.urgent ? "#f43f5e" : "#a78bfa");
 
   return (
     <div class="flex flex-col items-center gap-3">
       <div
-        class={`grid h-32 w-32 place-items-center rounded-full text-4xl font-black shadow-2xl transition ${
-          urgent()
-            ? "animate-pulse bg-rose-500 text-white shadow-rose-950/50"
-            : "bg-violet-400 text-slate-950 shadow-violet-950/30"
+        class={`timer-circle-ring grid h-32 w-32 place-items-center rounded-full text-4xl font-black shadow-2xl ${
+          props.urgent ? "shadow-rose-950/50" : "shadow-violet-950/30"
         }`}
-        style={{ background: urgent() ? undefined : `conic-gradient(#a78bfa ${progress()}%, rgba(255,255,255,.12) 0)` }}
+        style={{
+          background: `conic-gradient(${ringColor()} ${ringProgress()}%, rgba(255,255,255,.12) 0)`,
+        }}
       >
-        <div class="grid h-24 w-24 place-items-center rounded-full bg-slate-950 text-white">{isUnlimited() ? "∞" : props.remaining}</div>
+        <div
+          class={`grid h-24 w-24 place-items-center rounded-full bg-slate-950 font-black transition-colors duration-500 ${
+            props.urgent ? "text-rose-300" : "text-white"
+          }`}
+        >
+          {isUnlimited() ? "∞" : props.remaining}
+        </div>
       </div>
-      <span class={`text-sm font-bold ${urgent() ? "text-rose-200" : "text-slate-300"}`}>
-        {urgent() ? "زود باش!" : isUnlimited() ? "زمان نامحدود" : "زمان باقی‌مانده"}
+      <span
+        class={`text-sm font-bold transition-colors duration-500 ${props.urgent ? "text-rose-300" : "text-slate-300"}`}
+      >
+        {isUnlimited() ? "زمان نامحدود" : "زمان باقی‌مانده"}
       </span>
     </div>
   );

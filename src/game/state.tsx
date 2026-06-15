@@ -1,10 +1,16 @@
 import { createContext, useContext, type ParentProps } from "solid-js";
 import { createStore } from "solid-js/store";
 import { DEFAULT_SETTINGS } from "./constants";
+import { clearStoredPlayerNames, saveStoredPlayerNames } from "./player-names-storage";
 import { createQuestion } from "./questions";
 import { getPointsAfterQuestionChange, canChangeQuestion } from "./scoring";
-import { createDefaultSetupDraft } from "./settings";
+import { createDefaultSettings, createDefaultSetupDraft } from "./settings";
+import { createEmptyPlayer } from "./players";
 import type { GameSession, GameSettings, Player, SetupDraft, TurnResult } from "./types";
+
+function persistSetupPlayerNames(players: Player[]) {
+  saveStoredPlayerNames(players.map(player => player.name));
+}
 
 type GameState = {
   session?: GameSession;
@@ -129,17 +135,27 @@ export function GameProvider(props: ParentProps) {
     isLastTurn,
     setSetupPlayers(players) {
       setState("setupDraft", "players", players);
+      persistSetupPlayerNames(players);
     },
     updateSetupPlayerName(id, name) {
       const playerIndex = state.setupDraft.players.findIndex(player => player.id === id);
       if (playerIndex === -1) return;
       setState("setupDraft", "players", playerIndex, "name", name);
+      persistSetupPlayerNames(
+        state.setupDraft.players.map((player, index) =>
+          index === playerIndex ? { ...player, name } : player,
+        ),
+      );
     },
     setSetupSettings(settings) {
       setState("setupDraft", "settings", settings);
     },
     resetSetupDraft() {
-      setState("setupDraft", createDefaultSetupDraft());
+      clearStoredPlayerNames();
+      setState("setupDraft", {
+        players: [createEmptyPlayer(1), createEmptyPlayer(2)],
+        settings: createDefaultSettings(),
+      });
     },
     startGame(players, settings) {
       setState("session", createSession(players, { ...DEFAULT_SETTINGS, ...settings }));

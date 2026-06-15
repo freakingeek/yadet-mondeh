@@ -1,4 +1,4 @@
-import { A, useNavigate } from "@solidjs/router";
+import { useNavigate } from "@solidjs/router";
 import { createEffect, createSignal, onCleanup, Show } from "solid-js";
 import PageMeta from "@/components/PageMeta";
 import GameButton from "@/components/game/GameButton";
@@ -15,6 +15,14 @@ export default function Play() {
   const navigate = useNavigate();
   const game = useGame();
   const [remaining, setRemaining] = createSignal(0);
+  const [progress, setProgress] = createSignal(100);
+
+  createEffect(() => {
+    if (!game.session) {
+      game.resetGame();
+      navigate("/");
+    }
+  });
 
   createEffect(() => {
     const session = game.session;
@@ -26,24 +34,37 @@ export default function Play() {
 
     if (session.settings.timerSeconds === "unlimited") {
       setRemaining(0);
+      setProgress(100);
       return;
     }
 
-    setRemaining(session.settings.timerSeconds);
-    const interval = setInterval(() => {
-      setRemaining(current => {
-        if (current <= 1) {
-          clearInterval(interval);
-          game.markFail();
-          return 0;
-        }
+    const totalSeconds = session.settings.timerSeconds;
+    const deadline = Date.now() + totalSeconds * 1000;
+    let frame = 0;
 
-        return current - 1;
-      });
-    }, 1000);
+    const tick = () => {
+      const leftMs = deadline - Date.now();
 
-    onCleanup(() => clearInterval(interval));
+      if (leftMs <= 0) {
+        setRemaining(0);
+        setProgress(0);
+        game.markFail();
+        return;
+      }
+
+      setRemaining(Math.ceil(leftMs / 1000));
+      setProgress((leftMs / (totalSeconds * 1000)) * 100);
+      frame = requestAnimationFrame(tick);
+    };
+
+    setRemaining(totalSeconds);
+    setProgress(100);
+    frame = requestAnimationFrame(tick);
+
+    onCleanup(() => cancelAnimationFrame(frame));
   });
+
+  const isUrgent = () => remaining() <= 3 && remaining() > 0;
 
   const submitSuccess = () => {
     if (game.session?.phase === "question") {
@@ -71,23 +92,7 @@ export default function Play() {
         path="/play"
         noindex
       />
-      <Show
-        when={game.session}
-        fallback={
-        <main dir="rtl" lang="fa" class="fixed inset-0 z-10 h-svh overflow-hidden px-4 pt-8 pb-8 text-white">
-          <section class="mx-auto flex h-full max-w-md flex-col justify-center text-center">
-            <GameCard>
-              <p class="text-5xl">🫠</p>
-              <h1 class="mt-5 text-3xl font-black">بازی فعالی پیدا نشد</h1>
-              <p class="mt-3 leading-8 text-slate-300">اول بازیکن‌ها رو وارد کن تا بتونیم آبروریزی رو شروع کنیم.</p>
-              <A href="/start/players" class="mt-6 block">
-                <GameButton full>ساخت بازی جدید</GameButton>
-              </A>
-            </GameCard>
-          </section>
-        </main>
-      }
-    >
+      <Show when={game.session}>
       {session => (
         <>
           <Show when={session().phase === "turn-intro"}>
@@ -115,28 +120,33 @@ export default function Play() {
               <main
                 dir="rtl"
                 lang="fa"
-                class={`fixed inset-0 z-10 h-svh overflow-hidden px-4 pt-8 pb-6 text-white transition ${remaining() <= 3 ? "bg-rose-950" : ""}`}
+                class={`fixed inset-0 z-10 h-svh overflow-hidden px-4 pt-8 pb-6 text-white transition-colors duration-500 ${isUrgent() ? "bg-rose-950" : ""}`}
                 onClick={() => {
-                  if (remaining() <= 3) submitSuccess();
+                  if (isUrgent()) {
+                    submitSuccess();
+                  }
                 }}
               >
                 <section class="mx-auto flex h-full max-w-md flex-col justify-between gap-5">
                   <div class="space-y-5">
-                    <TimerCircle remaining={remaining()} total={session().settings.timerSeconds} />
+                    <TimerCircle
+                      remaining={remaining()}
+                      total={session().settings.timerSeconds}
+                      progress={progress()}
+                      urgent={isUrgent()}
+                    />
 
-                    <Show when={remaining() <= 3}>
-                      <div class="rounded-[2rem] bg-rose-500 p-6 text-center shadow-2xl shadow-rose-950/50">
-                        <p class="text-sm font-black">کل صفحه رو لمس کن اگه جواب دادی!</p>
-                        <strong class="mt-2 block text-8xl font-black">{remaining()}</strong>
-                      </div>
-                    </Show>
-
-                    <GameCard class="text-center">
+                    <GameCard class="relative text-center">
                       <p class="text-sm font-bold text-violet-200">سؤال سخت و ناجوانمردانه</p>
                       <h1 class="mt-4 text-3xl font-black leading-[1.7]">{question().text}</h1>
                       <p class="mt-5 rounded-2xl bg-slate-950/60 px-4 py-3 text-sm text-slate-300">
                         جواب رو بلند بگو؛ اگه مطمئنی زدی تو خال، ثبتش کن.
                       </p>
+                      <Show when={isUrgent()}>
+                        <p class="timer-hurry-text pointer-events-none absolute inset-x-0 top-full mt-4 text-6xl font-black text-rose-400" aria-live="polite">
+                          زود باش!
+                        </p>
+                      </Show>
                     </GameCard>
                   </div>
 
