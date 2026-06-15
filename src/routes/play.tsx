@@ -6,7 +6,7 @@ import GameCard from "@/components/game/GameCard";
 import ResultScreen from "@/components/game/ResultScreen";
 import Scoreboard from "@/components/game/Scoreboard";
 import TimerCircle from "@/components/game/TimerCircle";
-import { FAIL_MESSAGES, SUCCESS_MESSAGES, formatChangeMode } from "@/game/constants";
+import { FAIL_MESSAGES, SUCCESS_MESSAGES } from "@/game/constants";
 import { pickMessage } from "@/game/messages";
 import { canChangeQuestion } from "@/game/scoring";
 import { useGame } from "@/game/state";
@@ -74,7 +74,7 @@ export default function Play() {
       <Show
         when={game.session}
         fallback={
-        <main dir="rtl" lang="fa" class="fixed inset-0 z-10 h-svh overflow-hidden px-4 pt-24 pb-8 text-white">
+        <main dir="rtl" lang="fa" class="fixed inset-0 z-10 h-svh overflow-hidden px-4 pt-8 pb-8 text-white">
           <section class="mx-auto flex h-full max-w-md flex-col justify-center text-center">
             <GameCard>
               <p class="text-5xl">🫠</p>
@@ -91,7 +91,7 @@ export default function Play() {
       {session => (
         <>
           <Show when={session().phase === "turn-intro"}>
-            <main dir="rtl" lang="fa" class="fixed inset-0 z-10 h-svh overflow-hidden px-4 pt-24 pb-8 text-white">
+            <main dir="rtl" lang="fa" class="fixed inset-0 z-10 h-svh overflow-hidden px-4 pt-8 pb-8 text-white">
               <section class="mx-auto flex h-full max-w-md flex-col justify-center gap-5">
                 <GameCard class="text-center">
                   <p class="text-sm font-bold text-violet-200">
@@ -115,20 +115,13 @@ export default function Play() {
               <main
                 dir="rtl"
                 lang="fa"
-                class={`fixed inset-0 z-10 h-svh overflow-hidden px-4 pt-20 pb-6 text-white transition ${remaining() <= 3 ? "bg-rose-950" : ""}`}
+                class={`fixed inset-0 z-10 h-svh overflow-hidden px-4 pt-8 pb-6 text-white transition ${remaining() <= 3 ? "bg-rose-950" : ""}`}
                 onClick={() => {
                   if (remaining() <= 3) submitSuccess();
                 }}
               >
                 <section class="mx-auto flex h-full max-w-md flex-col justify-between gap-5">
                   <div class="space-y-5">
-                    <div class="flex items-center justify-between gap-3 text-sm font-bold text-slate-300">
-                      <span>نوبت {game.currentPlayer()?.name}</span>
-                      <span>
-                        دور {session().roundIndex + 1}/{session().settings.rounds}
-                      </span>
-                    </div>
-
                     <TimerCircle remaining={remaining()} total={session().settings.timerSeconds} />
 
                     <Show when={remaining() <= 3}>
@@ -148,17 +141,6 @@ export default function Play() {
                   </div>
 
                   <div class="space-y-3" onClick={event => event.stopPropagation()}>
-                    <div class="grid grid-cols-2 gap-3">
-                      <GameCard class="p-4 text-center">
-                        <span class="block text-xs text-slate-400">امتیاز سؤال</span>
-                        <strong class="text-3xl font-black text-violet-200">{session().currentTurnPoints}</strong>
-                      </GameCard>
-                      <GameCard class="p-4 text-center">
-                        <span class="block text-xs text-slate-400">تعویض</span>
-                        <strong class="text-xl font-black text-violet-200">{formatChangeMode(session().settings.changeQuestionMode)}</strong>
-                      </GameCard>
-                    </div>
-
                     <GameButton type="button" variant="success" full onClick={submitSuccess}>
                       جواب دادم، درست بود
                     </GameButton>
