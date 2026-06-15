@@ -22,7 +22,7 @@ export default function StartSettings() {
     }
 
     game.startGame(normalizedPlayers, game.setupDraft.settings);
-    music.restartForGameStart();
+    music.startForGame();
     navigate("/play");
   };
 
